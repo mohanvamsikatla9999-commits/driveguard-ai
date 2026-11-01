@@ -21,11 +21,16 @@ class Settings(BaseSettings):
     database_url: str = "sqlite:///./driveguard.db"
     jwt_secret: str = "development-only-change-this-secret"
     jwt_expire_minutes: int = 720
-    cors_origins: str = "http://localhost:3000"
+    cors_origins: str = "http://localhost:3000,https://frontend-navy-ten-32.vercel.app"
     model_config = ConfigDict(env_file="../.env", extra="ignore")
 
 cfg = Settings()
 def utcnow(): return datetime.now(timezone.utc).replace(tzinfo=None)
+# Ensure the SQLite directory exists (needed on Render's mounted disk)
+import os as _os
+if cfg.database_url.startswith("sqlite:////"):
+    _db_path = cfg.database_url.replace("sqlite:////", "/")
+    _os.makedirs(_os.path.dirname(_db_path), exist_ok=True)
 engine = create_engine(cfg.database_url, connect_args={"check_same_thread": False} if cfg.database_url.startswith("sqlite") else {}, pool_pre_ping=True)
 DB = sessionmaker(bind=engine, autoflush=False, expire_on_commit=False)
 class Base(DeclarativeBase): pass

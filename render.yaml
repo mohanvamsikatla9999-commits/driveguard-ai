@@ -5,12 +5,16 @@ services:
     dockerfilePath: ./backend/Dockerfile
     dockerContext: ./backend
     plan: free
+    disk:
+      name: driveguard-data
+      mountPath: /data
+      sizeGB: 1
     envVars:
       - key: DATABASE_URL
-        sync: false          # set manually in Render dashboard
+        value: sqlite:////data/driveguard.db
       - key: JWT_SECRET
         generateValue: true
       - key: JWT_EXPIRE_MINUTES
         value: "720"
       - key: CORS_ORIGINS
-        sync: false          # set to your Vercel frontend URL after deploy
+        value: https://frontend-navy-ten-32.vercel.app
