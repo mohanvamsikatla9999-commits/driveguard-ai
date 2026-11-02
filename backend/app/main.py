@@ -21,7 +21,7 @@ class Settings(BaseSettings):
     database_url: str = "sqlite:///./driveguard.db"
     jwt_secret: str = "development-only-change-this-secret"
     jwt_expire_minutes: int = 720
-    cors_origins: str = "http://localhost:3000,https://frontend-navy-ten-32.vercel.app"
+    cors_origins: str = "http://localhost:3000,https://frontend-navy-ten-32.vercel.app,https://frontend-3l1e6gqxf-mohanvamsikatla9999-commits-projects.vercel.app"
     model_config = ConfigDict(env_file="../.env", extra="ignore")
 
 cfg = Settings()
