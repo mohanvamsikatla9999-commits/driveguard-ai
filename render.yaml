@@ -3,15 +3,10 @@ services:
     name: driveguard-api
     runtime: docker
     dockerfilePath: ./backend/Dockerfile
-    dockerContext: ./backend
     plan: free
-    disk:
-      name: driveguard-data
-      mountPath: /data
-      sizeGB: 1
     envVars:
       - key: DATABASE_URL
-        value: sqlite:////data/driveguard.db
+        value: sqlite:////tmp/driveguard.db
       - key: JWT_SECRET
         generateValue: true
       - key: JWT_EXPIRE_MINUTES

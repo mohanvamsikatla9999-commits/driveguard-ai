@@ -8,11 +8,11 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 WORKDIR /app
 
 # Install Python deps first (layer-cached unless requirements change)
-COPY requirements.txt .
+COPY backend/requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
 # Copy app code
-COPY app ./app
+COPY backend/app ./app
 
 # Run as non-root
 RUN useradd -m appuser && chown -R appuser /app
